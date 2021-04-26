@@ -6,8 +6,17 @@ class PageCore {
 
   PageCore({
     this.radius = 10.0,
-    this.color = Colors.red,
+    this.color = Colors.blue,
   });
+
+  PageCore copy({
+    required double radius,
+    required Color color,
+  }) =>
+      PageCore(
+        radius: radius,
+        color: color,
+      );
 
   @override
   int get hashCode => radius.hashCode ^ color.hashCode;
@@ -34,9 +43,11 @@ class TransitionSate extends InheritedWidget {
       state != oldWidget.state;
 }
 
+typedef OnPageChange = void Function(PageCore core);
+
 class TransitionPage extends StatefulWidget {
   final List<Widget> children;
-  final Function(int) onPageChange;
+  final OnPageChange onPageChange;
   final Animation animation;
 
   TransitionPage({
@@ -50,23 +61,44 @@ class TransitionPage extends StatefulWidget {
 }
 
 class _TransitionPageState extends State<TransitionPage> {
-  final PageCore state = PageCore();
+  PageCore state = PageCore();
+  void setColor(Color color) {
+    final newState = state.copy(
+      color: color,
+      radius: state.radius,
+    );
+    setState(() => state = newState);
+  }
+
   @override
   Widget build(BuildContext context) => TransitionSate(
-        child: _TransitionPageView(animation: widget.animation),
+        child: TransitionPageView(
+          animation: widget.animation,
+        ),
         stateWidget: this,
         state: state,
       );
 }
 
-class _TransitionPageView extends AnimatedWidget {
+class TransitionPageView extends AnimatedWidget {
   final Widget? child;
   final Animation animation;
-  _TransitionPageView({
+
+  TransitionPageView({
     Key? key,
     this.child,
     required this.animation,
   }) : super(key: key, listenable: animation);
   @override
-  Widget build(BuildContext context) => Container();
+  Widget build(BuildContext context) {
+    final provider = TransitionSate.of(context);
+    return GestureDetector(
+      onTap: () {
+        provider.setColor(Colors.red);
+      },
+      child: Container(
+        color: provider.state.color,
+      ),
+    );
+  }
 }

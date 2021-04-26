@@ -11,10 +11,21 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  late final AnimationController controller;
+  late final Animation animation;
   @override
   void initState() {
     super.initState();
+
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+    animation = CurvedAnimation(
+      curve: Interval(0.0, 1.0),
+      parent: controller,
+    );
   }
 
   @override
@@ -45,9 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           TransitionPage(
-            onPageChange: (page) => print(page),
+            onPageChange: (page) {
+              print('${page.color}');
+            },
             children: _screens,
-          ),
+            animation: animation,
+          )
         ],
       ),
     );
