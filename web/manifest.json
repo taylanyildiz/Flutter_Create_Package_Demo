@@ -1,6 +1,6 @@
 {
-    "name": "flutter_custom_view_transition",
-    "short_name": "flutter_custom_view_transition",
+    "name": "flutter_page_transition_package_example",
+    "short_name": "flutter_page_transition_package_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

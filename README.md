@@ -1,4 +1,4 @@
-# flutter_custom_view_transition
+# flutter_page_transition_package_example
 
 A new Flutter project.
 
