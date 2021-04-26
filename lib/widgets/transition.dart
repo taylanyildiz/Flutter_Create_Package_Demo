@@ -168,6 +168,7 @@ class TransitionData extends InheritedWidget {
   /// If the [actionType] is [TransitionActionType.forward] return 1, -1 otherwise.
   double get actionSign =>
       actionType == TransitionActionType.forward ? 1.0 : -1.0;
+
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
     throw UnimplementedError();
