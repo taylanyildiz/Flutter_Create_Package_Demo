@@ -127,3 +127,49 @@ class _TransitionScope extends InheritedWidget {
     throw UnimplementedError();
   }
 }
+
+class TransitionData extends InheritedWidget {
+  TransitionData({
+    required this.mode,
+    required this.actionType,
+    required this.totalActionsExtent,
+    required this.dismissThreshold,
+    required this.dismissible,
+    required this.actionDelegate,
+    required this.transitionAnimation,
+    Key? key,
+    required Widget child,
+  }) : super(key: key, child: child);
+
+  ///
+  final TransitionMode? mode;
+
+  ///
+  final TransitionActionType? actionType;
+
+  ///
+  final double totalActionsExtent;
+
+  ///
+  final double dismissThreshold;
+
+  ///
+  final bool dismissible;
+
+  ///
+  final TransitionActionDelegate? actionDelegate;
+
+  /// Change page animation
+  final Animation<double> transitionAnimation;
+
+  /// The number of pages
+  int get pageCount => actionDelegate?.pageCount ?? 0;
+
+  /// If the [actionType] is [TransitionActionType.forward] return 1, -1 otherwise.
+  double get actionSign =>
+      actionType == TransitionActionType.forward ? 1.0 : -1.0;
+  @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
+    throw UnimplementedError();
+  }
+}
